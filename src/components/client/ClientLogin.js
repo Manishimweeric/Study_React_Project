@@ -1,13 +1,56 @@
 import React, { useState } from 'react';
 
+
 const ClientLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = () => {
-    // Add login functionality here
-    alert('Login functionality to be integrated!');
+  const handleLogin = async () => {
+    setIsLoading(true);
+    setError(null); // Reset previous error messages
+
+    const clientData = {
+      email,
+      password,
+    };
+
+    try {
+      const response = await fetch('http://localhost:8081/api/clients/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(clientData),
+      });
+
+      if (response.ok) {
+        const data = await response.json(); // Parse response data
+        const userId = data.id; // Extract user ID (assuming the API returns it as `userId`)
+
+        // Store user ID in localStorage
+        localStorage.setItem('userId', userId);
+
+        // Redirect to client home page on successful login
+        window.location.href = '/client-home';
+      } else if (response.status === 401) {
+        // If status is 401 Unauthorized, show invalid credentials error
+        setError('Invalid email or password');
+      } else {
+        // Handle other errors, if any
+        const errorData = await response.json();
+        console.log(errorData)
+        setError(errorData.message || 'Something went wrong. Please try again later.');
+      }
+    } catch (error) {
+      console.log(error)
+      setError('Something went wrong. Please try again later.');
+    } finally {
+      setIsLoading(false);
+    }
   };
+  
 
   const styles = {
     container: {
@@ -68,6 +111,11 @@ const ClientLogin = () => {
       textAlign: 'center',
       color: '#fff',
     },
+    error: {
+      color: 'red',
+      textAlign: 'center',
+      marginTop: '10px',
+    },
   };
 
   const handleFocus = (e) => {
@@ -108,10 +156,15 @@ const ClientLogin = () => {
           onMouseOver={(e) => (e.target.style.backgroundColor = styles.buttonHover.backgroundColor)}
           onMouseOut={(e) => (e.target.style.backgroundColor = styles.button.backgroundColor)}
         >
-          Login
+          {isLoading ? 'Logging in...' : 'Login'}
         </button>
+        {error && <div style={styles.error}>{error}</div>}
         <div style={styles.footer}>
           <p>Don't have an account? <a href="/client-signup" style={{ color: '#007bff' }}>Click here</a></p>
+        </div>
+
+        <div style={styles.footer}>
+          <p> If your adimn back  <a href="/" style={{ color: '#007bff' }}>Login as Admin </a></p>
         </div>
       </div>
     </div>

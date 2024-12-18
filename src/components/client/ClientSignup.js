@@ -3,11 +3,40 @@ import React, { useState } from 'react';
 const ClientSignup = () => {
   const [fullname, setFullname] = useState('');
   const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState(''); // Email state
   const [password, setPassword] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false); // State to track form submission
 
-  const handleSignup = () => {
-    // Add signup functionality here
-    alert('Signup functionality to be integrated!');
+  const handleSignup = async () => {
+    const clientData = {
+      fullname,
+      phone,
+      email, // Include email in the client data
+      password,
+    };
+
+    // Make API call to backend
+    try {
+      const response = await fetch('http://localhost:8081/api/clients/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(clientData),
+      });
+      if (response.ok) {
+        alert('Signup successful!');
+        setEmail('');
+        setFullname('');
+        setPhone('');
+        setPassword('');
+        setIsSubmitted(true); // Mark the form as submitted
+      } else {
+        alert('Error signing up!');
+      }
+    } catch (error) {
+      alert('Error signing up!');
+    }
   };
 
   const styles = {
@@ -40,7 +69,6 @@ const ClientSignup = () => {
       borderRadius: '5px',
       border: '1px solid #ccc',
       backgroundColor: '#fafafa',
-      color: '#fff',
       fontSize: '1rem',
       transition: '0.3s',
     },
@@ -71,16 +99,6 @@ const ClientSignup = () => {
     },
   };
 
-  const handleFocus = (e) => {
-    e.target.style.backgroundColor = '#f1f1f1';
-    e.target.style.borderColor = '#007bff';
-  };
-
-  const handleBlur = (e) => {
-    e.target.style.backgroundColor = '#f1f1f1';
-    e.target.style.borderColor = '#ccc';
-  };
-
   return (
     <div style={styles.container}>
       <div style={styles.form}>
@@ -91,8 +109,6 @@ const ClientSignup = () => {
           value={fullname}
           onChange={(e) => setFullname(e.target.value)}
           style={styles.input}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
         />
         <input
           type="text"
@@ -100,29 +116,36 @@ const ClientSignup = () => {
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           style={styles.input}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
         />
+        {!isSubmitted && (  // Conditionally render the email input only before submission
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={styles.input}
+          />
+        )}
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           style={styles.input}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
         />
-        <button
-          onClick={handleSignup}
-          style={styles.button}
-          onMouseOver={(e) => (e.target.style.backgroundColor = styles.buttonHover.backgroundColor)}
-          onMouseOut={(e) => (e.target.style.backgroundColor = styles.button.backgroundColor)}
-        >
+        <button onClick={handleSignup} style={styles.button}>
           Sign Up
         </button>
-        <div style={styles.footer}>
-          <p>Already have an account? <a href="/client-login" style={{ color: '#007bff' }}>Login here</a></p>
-        </div>
+        {isSubmitted && (
+          <div style={styles.footer}>
+            <p>Signup Successful! You can <a href="/client-login" style={{ color: '#007bff' }}>Login here</a></p>
+          </div>
+        )}
+        {!isSubmitted && (
+          <div style={styles.footer}>
+            <p>Already have an account? <a href="/client-login" style={{ color: '#007bff' }}>Login here</a></p>
+          </div>
+        )}
       </div>
     </div>
   );

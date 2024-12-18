@@ -26,6 +26,11 @@ const AdminNavbar = () => {
           </Link>
         </li>
         <li>
+          <Link to="/admin-notification" style={styles.link}>
+            Notifications
+          </Link>
+        </li>
+        <li>
           <Link to="/" style={styles.link}>
             Logout
           </Link>

@@ -10,6 +10,7 @@ import AdminLogin from './components/admin/AdminLogin';
 import AdminDashboard from './components/admin/AdminDashboard';
 import AdminItems from './components/admin/AdminItems';
 import AdminBids from './components/admin/AdminBids';
+import Notification from './components/admin/Notification';
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/admin-items" element={<AdminItems />} />
         <Route path="/admin-bids" element={<AdminBids />} />
+        <Route path="/admin-notification" element={<Notification />} />
+
       </Routes>
     </Router>
   );
