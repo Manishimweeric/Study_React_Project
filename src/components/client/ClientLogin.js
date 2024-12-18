@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-
+import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate
 
 const ClientLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate(); // Initialize the navigate function
 
   const handleLogin = async () => {
     setIsLoading(true);
@@ -32,25 +33,24 @@ const ClientLogin = () => {
         // Store user ID in localStorage
         localStorage.setItem('userId', userId);
 
-        // Redirect to client home page on successful login
-        window.location.href = '/client-home';
+        // Navigate to client home page on successful login
+        navigate('/client-home'); // Use navigate instead of window.location.href
       } else if (response.status === 401) {
         // If status is 401 Unauthorized, show invalid credentials error
         setError('Invalid email or password');
       } else {
         // Handle other errors, if any
         const errorData = await response.json();
-        console.log(errorData)
+        console.log(errorData);
         setError(errorData.message || 'Something went wrong. Please try again later.');
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setError('Something went wrong. Please try again later.');
     } finally {
       setIsLoading(false);
     }
   };
-  
 
   const styles = {
     container: {
@@ -160,11 +160,11 @@ const ClientLogin = () => {
         </button>
         {error && <div style={styles.error}>{error}</div>}
         <div style={styles.footer}>
-          <p>Don't have an account? <a href="/client-signup" style={{ color: '#007bff' }}>Click here</a></p>
+          <p>Don't have an account? <Link to="/client-signup" style={{ color: '#007bff' }}>Click here</Link></p>
         </div>
 
         <div style={styles.footer}>
-          <p> If your adimn back  <a href="/" style={{ color: '#007bff' }}>Login as Admin </a></p>
+          <p>If you're an admin, <Link to="/" style={{ color: '#007bff' }}>Login as Admin</Link></p>
         </div>
       </div>
     </div>

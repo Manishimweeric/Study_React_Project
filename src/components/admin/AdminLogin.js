@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // Import Link and useNavigate
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const navigate = useNavigate(); // Move this here
-
+  const navigate = useNavigate(); // Use this for programmatic navigation
 
   const handleLogin = async () => {
     setError("");
@@ -42,7 +41,6 @@ const AdminLogin = () => {
       console.error("Error:", error);
     }
   };
-  
   
   const styles = {
     container: {
@@ -134,11 +132,9 @@ const AdminLogin = () => {
         {error && <div style={{ ...styles.message, ...styles.error }}>{error}</div>}
 
         <div style={styles.footer}>
-          <p> If your Client back  <a href="/" style={{ color: '#007bff' }}>Login as Client </a></p>
+          <p>If you are a client, <Link to="/" style={{ color: '#007bff' }}>Login as Client</Link></p>
         </div>
       </div>
-      
-      
     </div>
   );
 };
