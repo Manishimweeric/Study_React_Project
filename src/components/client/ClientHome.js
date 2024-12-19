@@ -17,7 +17,7 @@ const ClientHome = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get('http://localhost:8081/api/admin/items'); // Replace with your API URL
+        const response = await axios.get('https://backendauca-9b41fc378333.herokuapp.com/api/admin/items'); // Replace with your API URL
         setItems(response.data); // Store fetched items in the state
       } catch (error) {
         console.error('Error fetching items:', error);
@@ -65,7 +65,7 @@ const ClientHome = () => {
   
     try {
       // Send the bid data to the backend
-      const response = await axios.post('http://localhost:8081/api/bidder/bid', bidData);
+      const response = await axios.post('https://backendauca-9b41fc378333.herokuapp.com/api/bidder/bid', bidData);
       alert(`You placed a bid of $${bidAmount} on ${item.name}`);
       console.log(response.data); // Log the response from the server
     } catch (error) {
@@ -123,7 +123,7 @@ const ClientHome = () => {
                   }}
                 >
                       <img
-                          src={`http://localhost:8081/api/admin/items/${item.id}/image`} 
+                          src={`https://backendauca-9b41fc378333.herokuapp.com/api/admin/items/${item.id}/image`} 
                           alt={item.name}
                           style={{ width: '100px', height: '100px' }}
                       />

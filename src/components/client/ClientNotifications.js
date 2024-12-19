@@ -15,7 +15,7 @@ const ClientNotifications = () => {
 
     if (userId) {
       axios
-        .post('http://localhost:8081/bidders/notifications_view')
+        .post('https://backendauca-9b41fc378333.herokuapp.com/bidders/notifications_view')
         .then((response) => {
           // Filter notifications based on the userId
           const filteredNotifications = response.data.filter(

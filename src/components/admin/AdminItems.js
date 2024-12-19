@@ -19,7 +19,7 @@ const AdminItems = () => {
       formData.append('image', image);
 
       try {
-        const response = await fetch('http://localhost:8081/api/admin/items', {
+        const response = await fetch('https://backendauca-9b41fc378333.herokuapp.com/api/admin/items', {
           method: 'POST',
           body: formData,
         });

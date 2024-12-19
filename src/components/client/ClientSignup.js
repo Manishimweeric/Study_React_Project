@@ -17,7 +17,7 @@ const ClientSignup = () => {
 
     // Make API call to backend
     try {
-      const response = await fetch('http://localhost:8081/api/clients/signup', {
+      const response = await fetch('https://backendauca-9b41fc378333.herokuapp.com/api/clients/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

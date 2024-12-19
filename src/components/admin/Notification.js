@@ -12,7 +12,7 @@ const NotificationForm = () => {
     useEffect(() => {
         const fetchClients = async () => {
             try {
-                const response = await fetch('http://localhost:8081/api/clients/client');
+                const response = await fetch('https://backendauca-9b41fc378333.herokuapp.com/api/clients/client');
                 if (response.ok) {
                     const data = await response.json();
                     setClients(data); // Store the list of clients
@@ -41,7 +41,7 @@ const NotificationForm = () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:8081/bidders/notifications?clientId=${selectedClient}&message=${encodeURIComponent(message)}`, {
+            const response = await fetch(`https://backendauca-9b41fc378333.herokuapp.com/bidders/notifications?clientId=${selectedClient}&message=${encodeURIComponent(message)}`, {
                 method: 'POST',
             });
 

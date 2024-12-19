@@ -14,7 +14,7 @@ const AdminBids = () => {
   useEffect(() => {
     const fetchBids = async () => {
       try {
-        const response = await axios.get('http://localhost:8081/api/bidder/bidHistory');
+        const response = await axios.get('https://backendauca-9b41fc378333.herokuapp.com/api/bidder/bidHistory');
         setBids(response.data);
       } catch (err) {
         setError('Failed to load bids. Please try again later.');
@@ -29,7 +29,7 @@ const AdminBids = () => {
   // Handle bid approval
   const handleApprove = async (id) => {
     try {
-      await axios.post(`http://localhost:8081/api/admin/bids/approve/${id}`);
+      await axios.post(`https://backendauca-9b41fc378333.herokuapp.com/api/admin/bids/approve/${id}`);
       const updatedBids = bids.map((bid) =>
         bid.id === id ? { ...bid, status: 'Approved' } : bid
       );
@@ -43,7 +43,7 @@ const AdminBids = () => {
   // Handle bid denial
   const handleDeny = async (id) => {
     try {
-      await axios.post(`http://localhost:8081/api/admin/bids/deny/${id}`);
+      await axios.post(`https://backendauca-9b41fc378333.herokuapp.com/api/admin/bids/deny/${id}`);
       const updatedBids = bids.map((bid) =>
         bid.id === id ? { ...bid, status: 'Denied' } : bid
       );
