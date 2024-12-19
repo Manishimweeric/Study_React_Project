@@ -43,7 +43,7 @@ const AdminItems = () => {
 
   const fetchItems = async () => {
     try {
-      const response = await fetch('http://localhost:8081/api/admin/items');
+      const response = await fetch('https://backendauca-9b41fc378333.herokuapp.com/api/admin/items');
       const data = await response.json();
       setItems(data);
     } catch (error) {
@@ -53,7 +53,7 @@ const AdminItems = () => {
 
   const handleDeleteItem = async (itemId) => {
     try {
-      const response = await fetch(`http://localhost:8081/api/admin/items/${itemId}`, {
+      const response = await fetch(`https://backendauca-9b41fc378333.herokuapp.com/api/admin/items/${itemId}`, {
         method: 'DELETE',
       });
 
@@ -80,7 +80,7 @@ const AdminItems = () => {
       console.log('Updating item with data:', { id: editingItem.id, name: newItem, price });
   
       try {
-        const response = await fetch(`http://localhost:8081/api/admin/items/${editingItem.id}`, {
+        const response = await fetch(`https://backendauca-9b41fc378333.herokuapp.com/api/admin/items/${editingItem.id}`, {
           method: 'PUT',
           body: formData, // Send FormData
         });
@@ -166,7 +166,7 @@ const AdminItems = () => {
                  <td>
                  {item.photo ? (
                       <img
-                          src={`http://localhost:8081/api/admin/items/${item.id}/image`} // Full URL to the image
+                          src={`https://backendauca-9b41fc378333.herokuapp.com/api/admin/items/${item.id}/image`} // Full URL to the image
                           alt={item.name}
                           style={{ width: '100px', height: '100px' }}
                       />
